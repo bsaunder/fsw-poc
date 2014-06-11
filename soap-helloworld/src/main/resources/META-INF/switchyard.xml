@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sy:switchyard xmlns:bean="urn:switchyard-component-bean:config:1.1" xmlns:sca="http://docs.oasis-open.org/ns/opencsa/sca/200912" xmlns:soap="urn:switchyard-component-soap:config:1.1" xmlns:sy="urn:switchyard-config:switchyard:1.1" name="fsw-poc-soap-helloworld" targetNamespace="urn:com.redhat.example:fsw-poc-soap-helloworld:1.0">
+  <sca:composite name="fsw-poc-soap-helloworld" targetNamespace="urn:com.redhat.example:fsw-poc-soap-helloworld:1.0">
+    <sca:component name="HelloWorldServiceBean">
+      <bean:implementation.bean class="com.redhat.example.fsw_poc_soap_helloworld.HelloWorldServiceBean"/>
+      <sca:service name="HelloWorldService">
+        <sca:interface.java interface="com.redhat.example.fsw_poc_soap_helloworld.HelloWorldService"/>
+      </sca:service>
+    </sca:component>
+    <sca:service name="HelloWorldServicePortType" promote="HelloWorldServiceBean/HelloWorldService">
+      <sca:interface.wsdl interface="HelloWorldService.wsdl#wsdl.porttype(HelloWorldServicePortType)"/>
+      <soap:binding.soap name="HelloWorldSoap">
+        <soap:wsdl>HelloWorldService.wsdl</soap:wsdl>
+        <soap:wsdlPort>HelloWorldServicePort</soap:wsdlPort>
+        <soap:socketAddr>:8080</soap:socketAddr>
+        <soap:contextPath>fsw-poc-soap-helloworld</soap:contextPath>
+      </soap:binding.soap>
+    </sca:service>
+  </sca:composite>
+</sy:switchyard>
