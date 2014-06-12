@@ -6,7 +6,7 @@
       <soap:binding.soap name="SoapHelloWorld">
         <soap:wsdl>HelloWorldService.wsdl</soap:wsdl>
         <soap:wsdlPort>HelloWorldServicePort</soap:wsdlPort>
-        <soap:socketAddr>:8080</soap:socketAddr>
+        <soap:socketAddr>:${jettyPort}</soap:socketAddr>
         <soap:contextPath>soap-helloworld</soap:contextPath>
       </soap:binding.soap>
     </sca:service>
@@ -17,4 +17,9 @@
       </sca:service>
     </sca:component>
   </sca:composite>
+  <sy:domain>
+    <sy:properties>
+      <sy:property name="jettyPort" value="${org.switchyard.component.http.standalone.port:8080}"/>
+    </sy:properties>
+  </sy:domain>
 </sy:switchyard>

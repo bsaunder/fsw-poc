@@ -1,0 +1,8 @@
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+   <SOAP-ENV:Header xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"/>
+   <soap:Body>
+      <hello:sayHelloResponse xmlns:hello="urn:com.redhat.fsw-poc:soap-helloworld:1.0">
+         <return>Hello World</return>
+      </hello:sayHelloResponse>
+   </soap:Body>
+</soap:Envelope>

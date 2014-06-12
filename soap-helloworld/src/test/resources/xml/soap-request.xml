@@ -1,0 +1,6 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:com.redhat.fsw.poc:soap-helloworld:1.0">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <urn:sayHelloWorld/>
+   </soapenv:Body>
+</soapenv:Envelope>

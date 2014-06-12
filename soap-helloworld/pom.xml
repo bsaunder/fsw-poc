@@ -58,4 +58,17 @@
 			<artifactId>switchyard-component-test-mixin-http</artifactId>
 		</dependency>
 	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<configuration>
+					<mainClass>com.redhat.fsw.poc.soap_helloworld.client.SoapHelloWorldClient</mainClass>
+					<classpathScope>test</classpathScope>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>
