@@ -23,7 +23,6 @@ Run the test client
 
 You should see the following output
 
-
     <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
     	<SOAP-ENV:Header xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"/>
 		<soap:Body>
