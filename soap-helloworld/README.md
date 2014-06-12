@@ -9,7 +9,7 @@ Single Composite with one Bean Component. The Bean Component (HelloWorldServiceB
 
 Building
 ======
-Build the project using the command:
+Build the project using the follow Maven command:
 
     mvn clean install
 
@@ -17,9 +17,15 @@ Automated Testing
 =====
 TODO
 
-Deploying
+Deploying/Undeploying
 =====
-TODO
+The project can be automatically deployed via the following Maven command:
+
+	mvn clean install -Pdeploy
+
+You can undeploy the project by only running the clean build phase, IE:
+
+	mvn clean -Pdeploy
 
 Functional Testing
 ======

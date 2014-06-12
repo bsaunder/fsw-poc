@@ -1,9 +1,11 @@
 /**
  * 
  */
-package com.redhat.example.fsw_poc_soap_helloworld;
+package com.redhat.fsw.poc.soap_helloworld.bean;
 
 import org.switchyard.component.bean.Service;
+
+import com.redhat.fsw.poc.soap_helloworld.service.HelloWorldService;
 
 /**
  * @author Bryan Saunders <btsaunde@gmail.com>

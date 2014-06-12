@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<wsdl:definitions name="HelloWorldService" targetNamespace="urn:com.redhat.example:fsw-poc-soap-helloworld:1.0" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="urn:com.redhat.example:fsw-poc-soap-helloworld:1.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+<wsdl:definitions name="HelloWorldService" targetNamespace="urn:com.redhat.fsw.poc:soap-helloworld:1.0" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="urn:com.redhat.fsw.poc:soap-helloworld:1.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
   <wsdl:types>
-<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="urn:com.redhat.example:fsw-poc-soap-helloworld:1.0" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="urn:com.redhat.example:fsw-poc-soap-helloworld:1.0">
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="urn:com.redhat.fsw.poc:soap-helloworld:1.0" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="urn:com.redhat.fsw.poc:soap-helloworld:1.0">
   <xsd:element name="sayHelloWorld" type="tns:sayHelloWorld"/>
   <xsd:complexType name="sayHelloWorld">
     <xsd:sequence/>
@@ -14,12 +14,12 @@
   </xsd:complexType>
 </xsd:schema>
   </wsdl:types>
-  <wsdl:message name="sayHelloWorld">
-    <wsdl:part name="parameters" element="tns:sayHelloWorld">
-    </wsdl:part>
-  </wsdl:message>
   <wsdl:message name="sayHelloWorldResponse">
     <wsdl:part name="parameters" element="tns:sayHelloWorldResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="sayHelloWorld">
+    <wsdl:part name="parameters" element="tns:sayHelloWorld">
     </wsdl:part>
   </wsdl:message>
   <wsdl:portType name="HelloWorldServicePortType">
@@ -44,7 +44,7 @@
   </wsdl:binding>
   <wsdl:service name="HelloWorldService">
     <wsdl:port name="HelloWorldServicePort" binding="tns:HelloWorldServiceSoapBinding">
-      <soap:address location="http://localhost:8080/fsw-poc-soap-helloworld/HelloWorldService"/>
+      <soap:address location="http://localhost:8080/soap-helloworld/HelloWorldService"/>
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.redhat.example.fsw_poc_soap_helloworld;
+package com.redhat.fsw.poc.soap_helloworld.transformer;
 
 import java.io.StringReader;
 
@@ -15,14 +15,14 @@ import org.w3c.dom.Element;
 
 /**
  * @author Bryan Saunders <btsaunde@gmail.com>
- * 
+ *
  */
-public final class HelloWorldTransformers {
+public final class HelloWorldTransformer {
 
-    @Transformer(to = "{urn:com.redhat.example:fsw-poc-soap-helloworld:1.0}sayHelloWorldResponse")
+    @Transformer(to = "{urn:com.redhat.fsw.poc:soap-helloworld:1.0}sayHelloWorldResponse")
     public Element transformStringToSayHelloWorldResponse(String from) {
         StringBuffer ackXml = new StringBuffer()
-                .append("<hello:sayHelloResponse xmlns:hello=\"urn:com.example.switchyard:switchyard-example:0.0.1-SNAPSHOT\">")
+                .append("<hello:sayHelloResponse xmlns:hello=\"urn:com.redhat.fsw-poc:soap-helloworld:1.0\">")
                 .append("<return>" + from + "</return>").append("</hello:sayHelloResponse>");
 
         return toElement(ackXml.toString());
@@ -39,4 +39,5 @@ public final class HelloWorldTransformers {
         
         return ((Document) dom.getNode()).getDocumentElement();
     }
+
 }
