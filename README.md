@@ -8,6 +8,9 @@ This project contains several smaller projects that represent multiple proof of 
 - **soap-jms** - *NYI*, Basic SOAP Endpoint that sends a message to a JMS Queue
 - **camel-jmsconsumer** - *NYI*, A Camel based JMS Consumer that runs on Startup
 - **camel-cbr** - *NYI*, A Camel based Content Based Router
+- **jms-dlq-pickup** - *NYI*, A DLQ Pickup Service that takes dead messages and returns them to the processing Queue periodically
+- **logging** - *NYI*, A Logging configuration that logs errors to a file separate from the rest of the logs
+- **combined** - *NYI*, A Combination of all previous PoC's into a single application
 
 Examples with *NYI* in the description are Not Yet Implemented.
 
