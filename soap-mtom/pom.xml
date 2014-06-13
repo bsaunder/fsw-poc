@@ -1,7 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
-	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<parent>
 		<groupId>com.redhat.fsw.poc</groupId>
 		<artifactId>parent</artifactId>
@@ -9,11 +7,11 @@
 		<relativePath>../</relativePath>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
-	<artifactId>soap-helloworld</artifactId>
+	<artifactId>soap-mtom</artifactId>
 
-	<name>Fuse Service Works PoC: soap-helloworld</name>
-	<description>Single SOAP Endpoint that says "Hello World"</description>
-
+	<name>Fuse Service Works PoC: soap-mtom</name>
+	<description>Single SOAP Endpoint that accepts an XML File via MTOM</description>
+	
 	<dependencies>
 		<dependency>
 			<groupId>org.switchyard.components</groupId>
@@ -57,18 +55,9 @@
 			<groupId>org.switchyard.components</groupId>
 			<artifactId>switchyard-component-test-mixin-http</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.switchyard.components</groupId>
+			<artifactId>switchyard-component-camel</artifactId>
+		</dependency>
 	</dependencies>
-
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>exec-maven-plugin</artifactId>
-				<configuration>
-					<mainClass>com.redhat.fsw.poc.soap_helloworld.client.SoapHelloWorldClient</mainClass>
-					<classpathScope>test</classpathScope>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
 </project>
