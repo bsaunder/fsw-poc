@@ -40,7 +40,7 @@
 
 	<modules>
 		<module>soap-helloworld</module>
-		<module>soap-mtom</module>
+
 	</modules>
 
 	<dependencyManagement>
