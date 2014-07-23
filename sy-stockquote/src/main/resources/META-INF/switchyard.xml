@@ -12,7 +12,7 @@
     </sca:service>
     <sca:component name="StockTraderRoutes">
       <camel:implementation.camel>
-        <camel:java class="com.redhat.fsw.poc.sy_stockquote.camel.route.StockTraderRoutes"/>
+        <camel:java class="com.redhat.fsw.poc.sy_stockquote.camel.route.trade.StockTraderRoutes"/>
       </camel:implementation.camel>
       <sca:service name="StockServicePortType">
         <sca:interface.wsdl interface="StockTrader.wsdl#wsdl.porttype(StockServicePortType)"/>

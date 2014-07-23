@@ -13,6 +13,14 @@
 	<description>SwitchYard SotckQuote Example that Pulls Together the Features from multiple previous PoC's</description>
 	<dependencies>
 		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>org.switchyard.components</groupId>
 			<artifactId>switchyard-component-soap</artifactId>
 		</dependency>
@@ -45,4 +53,26 @@
 			<artifactId>switchyard-component-camel</artifactId>
 		</dependency>
 	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>jaxb2-maven-plugin</artifactId>
+				<version>1.6</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>xjc</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<packageName>com.redhat.fsw.poc.sy_stockquote.generated.xsd.stocktrade</packageName>
+					<outputDirectory>${basedir}/src/main/generated</outputDirectory>
+					<schemaDirectory>${basedir}/src/main/xsd</schemaDirectory>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>
