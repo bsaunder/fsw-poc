@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- Created with Liquid XML 2014 Designer Edition (Trial) 12.2.3.5240 (http://www.liquid-technologies.com) -->
+<stockTrade xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <type>S</type>
+    <amount>56.8</amount>
+    <symbol>RHT</symbol>
+    <accountId>BTS0001</accountId>
+</stockTrade>

@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<parent>
 		<groupId>com.redhat.fsw.poc</groupId>
 		<artifactId>parent</artifactId>
@@ -6,12 +7,16 @@
 		<relativePath>../</relativePath>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
-	<artifactId>soap-camel-jms</artifactId>
+	<artifactId>soap-mtom</artifactId>
 
-	<name>Fuse Service Works PoC: soap-camel-jms</name>
-	<description>Single SOAP Endpoint that Takes the Message and Routes it to a JMS Queue via a Camel Route. A Second JMS Reference Listens to the Queue and Echos the Message Contents.</description>
-
+	<name>Fuse Service Works PoC: soap-mtom</name>
+	<description>Single SOAP Endpoint that accepts an XML File via MTOM</description>
+	
 	<dependencies>
+		<dependency>
+			<groupId>org.switchyard.components</groupId>
+			<artifactId>switchyard-component-http</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.switchyard.components</groupId>
 			<artifactId>switchyard-component-soap</artifactId>
@@ -34,11 +39,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.switchyard.components</groupId>
-			<artifactId>switchyard-component-camel</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.camel</groupId>
-			<artifactId>camel-jaxb</artifactId>
+			<artifactId>switchyard-component-bean</artifactId>
 		</dependency>
 
 		<!-- Testing -->
@@ -53,6 +54,10 @@
 		<dependency>
 			<groupId>org.switchyard.components</groupId>
 			<artifactId>switchyard-component-test-mixin-http</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.switchyard.components</groupId>
+			<artifactId>switchyard-component-camel</artifactId>
 		</dependency>
 	</dependencies>
 </project>

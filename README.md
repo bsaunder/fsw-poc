@@ -3,11 +3,12 @@ Fuse Service Works Proof of Concepts
 This project contains several smaller projects that represent multiple proof of concept (PoC) applications for use with Fuse Service Works (FSW). These projects can be used to get up and running quickly in FSW.
 
 - **soap-helloworld** - Basic SOAP endpoint that returns Hello World from a Java bean.
-- **soap-camel-jms** - *NYI*, Basic SOAP Endpoint that sends a message to a JMS Queue
+- **soap-camel-jms** - *IP*, Basic SOAP Endpoint that sends a message to a JMS Queue
 - **soap-mtom** - *NYI*, Basic SOAP endpoint that accepts an XML file using MTOM and saves the file locally
 - **camel-cbr** - *NYI*, A Camel based Content Based Router
+- **sw-stockquote** - *IP*, A Camel Based Route that takes information about a Stock Purchase, Verifies it, Calls an External Service to get the Stock Information, then Saves the Record and places the data onto a JMS Queue for further processing.
 
-Examples with *NYI* in the description are Not Yet Implemented.
+Examples with *NYI* in the description are Not Yet Implemented, *IP* denotes it is In Progress.
 
 Environment Requirements
 ======
