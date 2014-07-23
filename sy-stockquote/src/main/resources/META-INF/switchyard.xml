@@ -4,6 +4,7 @@
     <sca:service name="StockTraderService" promote="StockTraderRoutes/StockServicePortType">
       <sca:interface.wsdl interface="StockTrader.wsdl#wsdl.porttype(StockServicePortType)"/>
       <soap:binding.soap name="stockTraderServiceSoap">
+        <soap:contextMapper includes=".*" soapHeadersType="XML"/>
         <soap:wsdl>StockTrader.wsdl</soap:wsdl>
         <soap:wsdlPort>StockServicePort</soap:wsdlPort>
         <soap:socketAddr>:${jettyPort}</soap:socketAddr>

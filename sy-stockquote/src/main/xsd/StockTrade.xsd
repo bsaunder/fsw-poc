@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <!--Created with Liquid XML 2014 Designer Edition (Trial) 12.2.3.5240 (http://www.liquid-technologies.com)-->
 <xs:schema elementFormDefault="qualified"
+           targetNamespace="urn:com.redhat.fsw.poc:sy-stockquote:1.0"
            xmlns:xs="http://www.w3.org/2001/XMLSchema">
     <xs:element name="stockTrade">
         <xs:complexType>
