@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<sy:switchyard xmlns:camel="urn:switchyard-component-camel:config:1.0" xmlns:sca="http://docs.oasis-open.org/ns/opencsa/sca/200912" xmlns:soap="urn:switchyard-component-soap:config:1.0" xmlns:sy="urn:switchyard-config:switchyard:1.0" name="soap-camel-jms" targetNamespace="urn:com.redhat.fsw.poc:soap-camel-jms:0.0.1">
+<sy:switchyard xmlns:camel="urn:switchyard-component-camel:config:1.0" xmlns:jms="urn:switchyard-component-camel-jms:config:1.0" xmlns:sca="http://docs.oasis-open.org/ns/opencsa/sca/200912" xmlns:soap="urn:switchyard-component-soap:config:1.0" xmlns:sy="urn:switchyard-config:switchyard:1.0" name="soap-camel-jms" targetNamespace="urn:com.redhat.fsw.poc:soap-camel-jms:0.0.1">
   <sca:composite name="soap-camel-jms" targetNamespace="urn:com.redhat.fsw.poc:soap-camel-jms:0.0.1">
     <sca:component name="InboundCamelRoute">
       <camel:implementation.camel>
@@ -8,6 +8,9 @@
       <sca:service name="StockQuoteSoap">
         <sca:interface.wsdl interface="StockQuote.wsdl#wsdl.porttype(StockQuoteSoap)"/>
       </sca:service>
+      <sca:reference name="GetPriceQueueSender">
+        <sca:interface.java interface="com.redhat.fsw.poc.soap_camel_jms.jms.QueueSender"/>
+      </sca:reference>
     </sca:component>
     <sca:service name="StockQuoteSoap" promote="InboundCamelRoute/StockQuoteSoap">
       <sca:interface.wsdl interface="StockQuote.wsdl#wsdl.porttype(StockQuoteSoap)"/>
@@ -18,5 +21,12 @@
         <soap:contextPath>soap-camel-jms</soap:contextPath>
       </soap:binding.soap>
     </sca:service>
+    <sca:reference name="GetPriceQueueReference" multiplicity="0..1" promote="InboundCamelRoute/GetPriceQueueSender">
+      <sca:interface.java interface="com.redhat.fsw.poc.soap_camel_jms.jms.QueueSender"/>
+      <jms:binding.jms name="GetPriceQueueBinding">
+        <jms:queue>GetPriceQueue</jms:queue>
+        <jms:connectionFactory>#ConnectionFactory</jms:connectionFactory>
+      </jms:binding.jms>
+    </sca:reference>
   </sca:composite>
 </sy:switchyard>

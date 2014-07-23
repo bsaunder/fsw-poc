@@ -26,6 +26,8 @@ public class InboundCamelRoute extends RouteBuilder {
         .unmarshal(jxb)
         // Set the Price and Build the Response
         .bean(PriceBean.class, "setPrice")
+        // Send the Response to the Queue
+        .to("switchyard://GetPriceQueueSender")
         // Marshall the Result Object Back to XML
         .marshal(jxb).convertBodyTo(String.class);
     }

@@ -91,6 +91,11 @@
 				<artifactId>camel-jaxb</artifactId>
 				<version>${camel.version}</version>
 			</dependency>
+			<dependency>
+				<groupId>org.switchyard.components</groupId>
+				<artifactId>switchyard-component-camel-jms</artifactId>
+				<version>${switchyard.version}</version>
+			</dependency>
 
 
 			<!-- Testing -->
