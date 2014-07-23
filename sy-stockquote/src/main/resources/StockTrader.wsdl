@@ -57,7 +57,7 @@
     <wsdl:service name="StockService">
         <wsdl:port name="StockServicePort"
                    binding="tns:StockServiceBinding">
-            <soap:address location="http://localhost:8080/sy-stockquote/StockTraderService" />
+            <soap:address location="http://localhost:8080/sy-stockquote/StockService" />
         </wsdl:port>
     </wsdl:service>
 </wsdl:definitions>

@@ -18,6 +18,7 @@ public class StockTraderRoutes extends RouteBuilder {
         // Inbound Stock Trading Route
         from("switchyard://StockServicePortType")
         .log("Received message for 'StockServicePortType' : ${body}");
+        
     }
 
 }
