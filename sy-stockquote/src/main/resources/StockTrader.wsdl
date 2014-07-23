@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--Created with Liquid XML 2014 Designer Edition (Trial) 12.2.3.5240 (http://www.liquid-technologies.com)-->
+<wsdl:definitions name="StockTraderService"
+                  targetNamespace="urn:com.redhat.fsw.poc:sy-stockquote:1.0"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+                  xmlns:tns="urn:com.redhat.fsw.poc:sy-stockquote:1.0"
+                  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+                  xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+    <wsdl:types>
+        <xs:schema elementFormDefault="qualified"
+                   targetNamespace="urn:com.redhat.fsw.poc:sy-stockquote:1.0">
+            <xs:element name="InputType">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="tradeConfirmationCode"
+                                    type="xs:string" />
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="OutputType">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="tradeResult"
+                                    type="xs:boolean" />
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:message name="ProcessStockTradeInput">
+        <wsdl:part name="inputParameters"
+                   element="tns:InputType" />
+    </wsdl:message>
+    <wsdl:message name="NewOutputMessage">
+        <wsdl:part name="ouputParameters"
+                   element="tns:OutputType" />
+    </wsdl:message>
+    <wsdl:portType name="StockServicePortType">
+        <wsdl:operation name="ProcessStockTrade">
+            <wsdl:input message="tns:ProcessStockTradeInput" />
+            <wsdl:output message="tns:NewOutputMessage" />
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="StockServiceBinding"
+                  type="tns:StockServicePortType">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+        <wsdl:operation name="ProcessStockTrade">
+            <wsdl:input />
+            <wsdl:output />
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="StockService">
+        <wsdl:port name="StockServicePort"
+                   binding="tns:StockServiceBinding">
+            <soap:address location="http://localhost:8080/sy-stockquote/StockService" />
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

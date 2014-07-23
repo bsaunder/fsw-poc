@@ -42,6 +42,7 @@
 		<module>soap-helloworld</module>
 
 		<module>soap-camel-jms</module>
+		<module>sy-stockquote</module>
 	</modules>
 
 	<dependencyManagement>
