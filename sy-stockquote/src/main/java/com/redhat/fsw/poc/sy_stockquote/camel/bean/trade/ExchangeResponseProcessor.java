@@ -35,7 +35,7 @@ public class ExchangeResponseProcessor {
     @Handler
     public void processResponse(@Headers Map<String,Object> headers, @Body GetQuoteResponse response){
         this.logger.info("Exchange Response Processor Started");
-        
+                
         if(response != null){
             String quoteResult = response.getGetQuoteResult();
             

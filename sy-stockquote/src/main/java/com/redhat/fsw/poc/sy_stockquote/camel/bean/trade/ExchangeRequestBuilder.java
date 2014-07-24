@@ -49,6 +49,7 @@ public class ExchangeRequestBuilder {
 
             // Set Request on Body
             exchange.getIn().setBody(request);
+
         } else {
             throw new IllegalStateException("Manifest Object invalid format, StockTrade expected.");
         }

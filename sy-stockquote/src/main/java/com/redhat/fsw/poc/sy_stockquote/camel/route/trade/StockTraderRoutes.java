@@ -15,6 +15,7 @@ import com.redhat.fsw.poc.sy_stockquote.camel.bean.trade.ExchangeResponseProcess
 import com.redhat.fsw.poc.sy_stockquote.camel.bean.trade.TradeManifestBuilder;
 import com.redhat.fsw.poc.sy_stockquote.camel.bean.trade.TradeManifestValidator;
 import com.redhat.fsw.poc.sy_stockquote.camel.util.CamelExchangeConstants;
+import com.redhat.fsw.poc.sy_stockquote.camel.util.CamelExchangeUtil;
 import com.redhat.fsw.poc.sy_stockquote.generated.wsdl.stockdata.GetQuote;
 import com.redhat.fsw.poc.sy_stockquote.generated.wsdl.stockdata.GetQuoteResponse;
 import com.redhat.fsw.poc.sy_stockquote.generated.wsdl.stocktrader.StockTradeOutput;
@@ -70,13 +71,12 @@ public class StockTraderRoutes extends RouteBuilder {
                         .bean(ExchangeRequestBuilder.class)
                         .marshal(exchangeRequestJaxb).convertBodyTo(String.class)
                         .log(LoggingLevel.INFO, "Calling Stock Data Service, Request: ${body}")
-                        .log("IN-MV4: ${in.header.ST_isManifestValid}")
-                        .to("switchyard://StockQuoteCaller") // To() Kills my Headers... I am getting a New Exchange
-                        .log("IN-MV5: ${in.header.ST_isManifestValid}")
+                        .bean(CamelExchangeUtil.class, "backupHeaders") // To() Kills my Headers. New Message Returned, So we Need to Save the Headers.
+                        .to("switchyard://StockQuoteCaller") 
+                        .bean(CamelExchangeUtil.class, "restoreHeaders")
                         .log(LoggingLevel.INFO, "Called Stock Data Service, Returned: ${body}")
                         .unmarshal(exchangeResponseJaxb)
                         .bean(ExchangeResponseProcessor.class)
-                        .log("IN-MV6: ${in.header.ST_isManifestValid}")
                     .endChoice() // Terminate inner choice()
             .end() // Terminate choice()
         .choice()
@@ -86,14 +86,11 @@ public class StockTraderRoutes extends RouteBuilder {
                 // TODO to(file://NFS_Share)
                 .to("switchyard://FileRejectionSender")
             .otherwise()
-                .log("IN-MV7: ${in.header.ST_isManifestValid}")
                 .log(inboundTradeRouteId + ": State Exchange Or Manifest Not Valid")
                 .to("switchyard://ESBNotifySender")
             .end() // Terminate choice()
         .log(inboundTradeRouteId + ": Building Response")
-        .log("IN-MV8: ${in.header.ST_isManifestValid}")
         .bean(StockTradeResponseBuilder.class)
-        .log("IN-MV9: ${in.header.ST_isManifestValid}")
         .marshal(stockTradeOutputJaxb)
         .convertBodyTo(String.class)
         .log(inboundTradeRouteId + ": Route Completed");
