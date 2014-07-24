@@ -4,8 +4,10 @@ package com.redhat.fsw.poc.sy_stockquote.generated.wsdl.stocktrader;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlMimeType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+import javax.xml.transform.Source;
 
 
 /**
@@ -18,7 +20,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="tradeConfirmationCode" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="tradeDetails" type="{http://www.w3.org/2001/XMLSchema}base64Binary"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -29,36 +31,37 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "tradeConfirmationCode"
+    "tradeDetails"
 })
 @XmlRootElement(name = "StockTradeInput")
 public class StockTradeInput {
 
     @XmlElement(required = true)
-    protected String tradeConfirmationCode;
+    @XmlMimeType("text/xml")
+    protected Source tradeDetails;
 
     /**
-     * Gets the value of the tradeConfirmationCode property.
+     * Gets the value of the tradeDetails property.
      * 
      * @return
      *     possible object is
-     *     {@link String }
+     *     {@link Source }
      *     
      */
-    public String getTradeConfirmationCode() {
-        return tradeConfirmationCode;
+    public Source getTradeDetails() {
+        return tradeDetails;
     }
 
     /**
-     * Sets the value of the tradeConfirmationCode property.
+     * Sets the value of the tradeDetails property.
      * 
      * @param value
      *     allowed object is
-     *     {@link String }
+     *     {@link Source }
      *     
      */
-    public void setTradeConfirmationCode(String value) {
-        this.tradeConfirmationCode = value;
+    public void setTradeDetails(Source value) {
+        this.tradeDetails = value;
     }
 
 }

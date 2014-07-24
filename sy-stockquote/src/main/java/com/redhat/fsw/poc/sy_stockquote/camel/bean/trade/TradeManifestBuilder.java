@@ -42,7 +42,7 @@ public class TradeManifestBuilder {
     @Handler
     public void buildManifest(Exchange exchange) {
         this.logger.info("Trade Manifest Builder Started");
-
+        
         // Get the Header for the Manifest with its XML Content
         Object manifestHeader = exchange.getIn().getHeader(TradeConstants.TRADE_MANIFEST_HEADER_NAME);
         if (manifestHeader != null) {

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<StockQuotes>
+	<Stock>
+		<Symbol>RHT</Symbol>
+		<Last>56.365</Last>
+		<Date>7/24/2014</Date>
+		<Time>3:52pm</Time>
+		<Change>+0.485</Change>
+		<Open>55.85</Open>
+		<High>56.45</High>
+		<Low>55.72</Low>
+		<Volume>1243842</Volume>
+		<MktCap>10.658B</MktCap>
+		<PreviousClose>55.88</PreviousClose>
+		<PercentageChange>+0.87%</PercentageChange>
+		<AnnRange>41.89 - 61.45</AnnRange>
+		<Earns>0.92</Earns>
+		<P-E>60.74</P-E>
+		<Name>Red Hat</Name>
+	</Stock>
+</StockQuotes>

@@ -1,10 +1,19 @@
 package com.redhat.fsw.poc.sy_stockquote.camel.route.trade;
 
+import java.io.File;
+
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
+import javax.xml.transform.Result;
+import javax.xml.transform.Source;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.stream.StreamResult;
 
+import org.apache.camel.Exchange;
 import org.apache.camel.LoggingLevel;
 import org.apache.camel.Predicate;
+import org.apache.camel.Processor;
 import org.apache.camel.builder.PredicateBuilder;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.converter.jaxb.JaxbDataFormat;
@@ -18,6 +27,7 @@ import com.redhat.fsw.poc.sy_stockquote.camel.util.CamelExchangeConstants;
 import com.redhat.fsw.poc.sy_stockquote.camel.util.CamelExchangeUtil;
 import com.redhat.fsw.poc.sy_stockquote.generated.wsdl.stockdata.GetQuote;
 import com.redhat.fsw.poc.sy_stockquote.generated.wsdl.stockdata.GetQuoteResponse;
+import com.redhat.fsw.poc.sy_stockquote.generated.wsdl.stocktrader.StockTradeInput;
 import com.redhat.fsw.poc.sy_stockquote.generated.wsdl.stocktrader.StockTradeOutput;
 
 /**
@@ -40,6 +50,9 @@ public class StockTraderRoutes extends RouteBuilder {
     public void configure() throws JAXBException {
         
         // JAXB Data Formatter
+        JaxbDataFormat stockTradeInputJaxb = new JaxbDataFormat(JAXBContext.newInstance(StockTradeInput.class.getPackage().getName()));
+        stockTradeInputJaxb.setFragment(true);
+        
         JaxbDataFormat stockTradeOutputJaxb = new JaxbDataFormat(JAXBContext.newInstance(StockTradeOutput.class.getPackage().getName()));
         stockTradeOutputJaxb.setFragment(true);
         
@@ -50,7 +63,6 @@ public class StockTraderRoutes extends RouteBuilder {
         exchangeResponseJaxb.setFragment(true);
         
         // Predicate Magic
-        // Ref: http://www.davsclaus.com/2009/02/apache-camel-and-using-compound.html
         Predicate manifestValidPredicate = header(CamelExchangeConstants.IS_MANIFEST_VALID).isEqualTo(true);
         Predicate stateExchangeValidPredicate = header(CamelExchangeConstants.IS_STATE_EXCHANGE_VALID).isEqualTo(true);
         Predicate manifestAndStateExchangeValidPredicate = PredicateBuilder.and(manifestValidPredicate, stateExchangeValidPredicate);
@@ -60,6 +72,7 @@ public class StockTraderRoutes extends RouteBuilder {
         .routeId(inboundTradeRouteId)
         .log("Received message for 'StockServicePortType'")
         .log(inboundTradeRouteId + ": Route Started")
+        .setProperty(CamelExchangeConstants.INCOMING_BODY, simple("${body}"))
         .bean(TradeManifestBuilder.class)
         .choice()
             .when(header(CamelExchangeConstants.MANIFEST_OBJECT).isNotNull())
@@ -82,6 +95,28 @@ public class StockTraderRoutes extends RouteBuilder {
         .choice()
             .when(manifestAndStateExchangeValidPredicate)
                 .log(inboundTradeRouteId + ": State Exchange & Manifest Valid")
+                .log(inboundTradeRouteId + ": Original Body = ${in.header.ST_incomingMessageBody}")
+                .setBody(simple("${in.header.ST_incomingMessageBody}"))
+                .unmarshal(stockTradeInputJaxb)
+                .process(new Processor() {
+                    
+                    @Override
+                    public void process(Exchange exchange) throws Exception {
+                        Object body = exchange.getIn().getBody();
+                        if(body instanceof StockTradeInput){
+                            StockTradeInput input = (StockTradeInput) body;
+                            String filename = "attachment.xml";
+
+                            Source source = input.getTradeDetails();
+
+                            File file = new File(filename);
+                            Result result = new StreamResult(file);
+
+                            Transformer xformer = TransformerFactory.newInstance().newTransformer();
+                            xformer.transform(source, result);
+                        }
+                    }
+                })
                 // TODO bean(EPDAttachmentHandler, inflateAttachment)
                 // TODO to(file://NFS_Share)
                 .to("switchyard://FileRejectionSender")

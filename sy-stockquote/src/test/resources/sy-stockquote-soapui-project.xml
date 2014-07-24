@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <con:soapui-project activeEnvironment="Default" name="sy-stockquote" resourceRoot="" soapui-version="5.0.0" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" wsaVersion="NONE" name="StockServiceBinding" type="wsdl" bindingName="{urn:com.redhat.fsw.poc:sy-stockquote:1.0}StockServiceBinding" soapVersion="1_1" anonymous="optional" definition="http://localhost:8080/sy-stockquote/StockService?wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="http://localhost:8080/sy-stockquote/StockService?wsdl"><con:part><con:url>http://localhost:8080/sy-stockquote/StockService?wsdl</con:url><con:content><![CDATA[<wsdl:definitions name="StockTraderService" targetNamespace="urn:com.redhat.fsw.poc:sy-stockquote:1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="urn:com.redhat.fsw.poc:sy-stockquote:1.0" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/">
   <wsdl:types>
-    <xs:schema elementFormDefault="qualified" targetNamespace="urn:com.redhat.fsw.poc:sy-stockquote:1.0">
-      <xs:element name="InputType">
+    <xs:schema elementFormDefault="qualified" targetNamespace="urn:com.redhat.fsw.poc:sy-stockquote:1.0" xmlns:xmime="http://www.w3.org/2005/05/xmlmime">
+      <xs:element name="StockTradeInput">
         <xs:complexType>
           <xs:sequence>
-            <xs:element name="tradeConfirmationCode" type="xs:string"/>
+            <xs:element name="tradeDetails" type="xs:base64Binary" xmime:expectedContentTypes="text/xml"/>
           </xs:sequence>
         </xs:complexType>
       </xs:element>
-      <xs:element name="OutputType">
+      <xs:element name="StockTradeOutput">
         <xs:complexType>
           <xs:sequence>
             <xs:element name="tradeResult" type="xs:boolean"/>
@@ -19,10 +19,10 @@
     </xs:schema>
   </wsdl:types>
   <wsdl:message name="NewOutputMessage">
-    <wsdl:part element="tns:OutputType" name="ouputParameters"></wsdl:part>
+    <wsdl:part element="tns:StockTradeOutput" name="ouputParameters"></wsdl:part>
   </wsdl:message>
   <wsdl:message name="ProcessStockTradeInput">
-    <wsdl:part element="tns:InputType" name="inputParameters"></wsdl:part>
+    <wsdl:part element="tns:StockTradeInput" name="inputParameters"></wsdl:part>
   </wsdl:message>
   <wsdl:portType name="StockServicePortType">
     <wsdl:operation name="ProcessStockTrade">
@@ -42,7 +42,7 @@
       <soap:address location="http://localhost:8080/sy-stockquote/StockService"/>
     </wsdl:port>
   </wsdl:service>
-</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://localhost:8080/sy-stockquote/StockService</con:endpoint></con:endpoints><con:operation isOneWay="false" action="" name="ProcessStockTrade" bindingOperationName="ProcessStockTrade" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="ValidManifest"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/sy-stockquote/StockService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:com.redhat.fsw.poc:sy-stockquote:1.0">
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://localhost:8080/sy-stockquote/StockService</con:endpoint></con:endpoints><con:operation isOneWay="false" action="" name="ProcessStockTrade" bindingOperationName="ProcessStockTrade" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Valid"><con:settings><con:setting id="WsdlSettings@enable-mtom">true</con:setting><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@inline-response-attachments">true</con:setting><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@disable-multipart-attachments">false</con:setting><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@force_mtom">true</con:setting><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@expand-mtom-attachments">true</con:setting><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@encode_attachments">true</con:setting><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@enable_inline_files">true</con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/sy-stockquote/StockService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:com.redhat.fsw.poc:sy-stockquote:1.0">
    <soapenv:Header>
       <urn1:stockTrade xmlns:urn1="urn:com.redhat.fsw.poc:sy-stockquote:1.0">
          <urn1:type>B</urn1:type>
@@ -53,21 +53,7 @@
    </soapenv:Header>
    <soapenv:Body>
       <urn:StockTradeInput>
-         <urn:tradeConfirmationCode>CONF-S-0001-APPROVED</urn:tradeConfirmationCode>
+         <urn:tradeDetails>cid:StockQuotes.xml</urn:tradeDetails>
       </urn:StockTradeInput>
    </soapenv:Body>
-</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:com.redhat.fsw.poc:sy-stockquote:1.0/StockServicePortType/ProcessStockTradeRequest"/><con:wsrmConfig version="1.2"/></con:call><con:call name="InvalidManifest"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/sy-stockquote/StockService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:com.redhat.fsw.poc:sy-stockquote:1.0">
-   <soapenv:Header>
-      <urn1:stockTrade xmlns:urn1="urn:com.redhat.fsw.poc:sy-stockquote:1.0">
-         <urn1:type>G</urn1:type>
-         <urn1:amount>58.6</urn1:amount>
-         <urn1:symbol>RHT</urn1:symbol>
-         <urn1:accountId>BTS00001</urn1:accountId>
-      </urn1:stockTrade>
-   </soapenv:Header>
-   <soapenv:Body>
-      <urn:StockTradeInput>
-         <urn:tradeConfirmationCode>CONF-S-0001-APPROVED</urn:tradeConfirmationCode>
-      </urn:StockTradeInput>
-   </soapenv:Body>
-</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:com.redhat.fsw.poc:sy-stockquote:1.0/StockServicePortType/ProcessStockTradeRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/></con:soapui-project>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:attachment><con:name>StockQuotes.xml</con:name><con:contentType>text/xml</con:contentType><con:size>525</con:size><con:contentId>StockQuotes.xml</con:contentId><con:url>E:/Source/workspace/fsw-poc/sy-stockquote/src/test/resources/xml/StockQuotes.xml</con:url><con:data>UEsDBBQACAgIANeD+EQAAAAAAAAAAAAAAAAPAAAAU3RvY2tRdW90ZXMueG1sXZFfT4MwFMWfNfE7EBKfzFpgBTrTddG5ZA/+nYvvlV0ZGbQEytRvb7mgRt/O75yb3nt7xeKjKr0jNG1h9NwPSeB7oDOzK3Q+9zv7NuH+Qp6dimdrssNTZyy0Dk8G7pWTn9WrKeVmvRV01OjfqtbKOCHTJBYUAe0bZUGmNGI0CkImKDIm26ICOb2Mo7oSFAHt5V7pHORFQBh3L42I0UMNWsYx6X3U6K6LfN83Zs5FPYxj3vvSNHLDOIneiyk71yaM2JQzF4yM2d3BLlUtw4AkMb8WdGTMHhs4FqZrl6VpAQfggv41hzpoMtBW5fC7BE/PXe3/AMuvtN4gsZDwmTfxkhCX+PGxaqUa3cqAzNzAgx56TVYyCUjqvrSX6N0rt80Gdt5aWUGR+uPR7+uNarzrF1BLBwilzydcMAEAAA0CAABQSwECFAAUAAgICADXg/hEpc8nXDABAAANAgAADwAAAAAAAAAAAAAAAAAAAAAAU3RvY2tRdW90ZXMueG1sUEsFBgAAAAABAAEAPQAAAG0BAAAAAA==</con:data><con:id>86b70ae8-1224-4d1f-9149-24e41343492a</con:id></con:attachment><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:com.redhat.fsw.poc:sy-stockquote:1.0/StockServicePortType/ProcessStockTradeRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/></con:soapui-project>

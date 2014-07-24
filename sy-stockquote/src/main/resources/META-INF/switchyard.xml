@@ -9,6 +9,7 @@
         <soap:wsdlPort>StockServicePort</soap:wsdlPort>
         <soap:socketAddr>:${jettyPort}</soap:socketAddr>
         <soap:contextPath>sy-stockquote</soap:contextPath>
+        <soap:mtom xopExpand="true"/>
       </soap:binding.soap>
     </sca:service>
     <sca:component name="StockTraderRoutes">

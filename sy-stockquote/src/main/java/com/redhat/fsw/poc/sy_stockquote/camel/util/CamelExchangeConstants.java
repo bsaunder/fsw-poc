@@ -21,7 +21,12 @@ public abstract class CamelExchangeConstants {
     /**
      * Specifies whether the Manifest is Valid. Should always be a boolean type.
      */
-    public static final String IS_STATE_EXCHANGE_VALID = "ST_isStateExchangeValid";;
+    public static final String IS_STATE_EXCHANGE_VALID = "ST_isStateExchangeValid";
+
+    /**
+     * Contains the Incoming Message Body.
+     */
+    public static final String INCOMING_BODY = "ST_incomingMessageBody";
 
     /**
      * Private Constructor. Class Should Not Be Instantiated.

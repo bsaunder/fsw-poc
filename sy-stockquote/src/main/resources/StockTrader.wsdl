@@ -12,13 +12,15 @@
                   xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
                   xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
     <wsdl:types>
-        <xs:schema elementFormDefault="qualified"
+        <xs:schema xmlns:xmime="http://www.w3.org/2005/05/xmlmime"
+                   elementFormDefault="qualified"
                    targetNamespace="urn:com.redhat.fsw.poc:sy-stockquote:1.0">
             <xs:element name="StockTradeInput">
                 <xs:complexType>
                     <xs:sequence>
-                        <xs:element name="tradeConfirmationCode"
-                                    type="xs:string" />
+                        <xs:element xmime:expectedContentTypes="text/xml"
+                                    name="tradeDetails"
+                                    type="xs:base64Binary" />
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
