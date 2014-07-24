@@ -1,3 +1,6 @@
+/**
+ * 
+ */
 package com.redhat.fsw.poc.sy_stockquote.camel.bean.trade;
 
 import org.apache.camel.Exchange;
@@ -6,16 +9,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.redhat.fsw.poc.sy_stockquote.camel.util.CamelExchangeConstants;
+import com.redhat.fsw.poc.sy_stockquote.generated.wsdl.stockdata.GetQuote;
 import com.redhat.fsw.poc.sy_stockquote.generated.xsd.stocktrade.StockTrade;
-import com.redhat.fsw.poc.sy_stockquote.trade.validator.StockTradeManifestValidator;
 
 /**
- * Validates the Manifest for the Trade Flow.
+ * Builds the Objects needed to make SOAP Calls to the Stock Exchange.
  * 
  * @author Bryan Saunders <btsaunde@gmail.com>
  * 
  */
-public class TradeManifestValidator {
+public class ExchangeRequestBuilder {
 
     /**
      * Logger
@@ -23,32 +26,33 @@ public class TradeManifestValidator {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     /**
-     * Validates a Manifest.
+     * Builds a SOAP Request to call the Stock Exchange
      * 
      * @param exchange
-     *            Incoming Camel Exchange
+     *            Incoming Exchange
      */
     @Handler
-    public void validateManifest(Exchange exchange) throws IllegalStateException {
-        this.logger.info("Trade Manifest Validator Started");
+    public void buildStockExchangeRequest(Exchange exchange) {
+        this.logger.info("Stock Exchange Request Builder Started");
 
         // Get Manifest from Header
         Object manifestObject = exchange.getIn().getHeader(CamelExchangeConstants.MANIFEST_OBJECT);
         if (manifestObject instanceof StockTrade) {
             StockTrade manifest = (StockTrade) manifestObject;
 
-            // Validate Manifest
-            StockTradeManifestValidator validator = new StockTradeManifestValidator();
-            boolean isValid = validator.validateManifest(manifest);
+            // Get Symbol
+            String symbol = manifest.getSymbol();
 
-            // Set Headers with Result
-            this.logger.info("Trade Manifest Valid: " + isValid);
-            exchange.getIn().setHeader(CamelExchangeConstants.IS_MANIFEST_VALID, isValid);
+            // Build Request
+            GetQuote request = new GetQuote();
+            request.setSymbol(symbol);
+
+            // Set Request on Body
+            exchange.getIn().setBody(request);
         } else {
             throw new IllegalStateException("Manifest Object invalid format, StockTrade expected.");
         }
 
-        this.logger.info("Trade Manifest Validator Completed");
+        this.logger.info("Stock Exchange Request Builder Completed");
     }
-
 }

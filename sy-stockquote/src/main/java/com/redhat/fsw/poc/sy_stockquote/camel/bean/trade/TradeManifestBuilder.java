@@ -16,7 +16,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.redhat.fsw.poc.sy_stockquote.camel.util.CamelExchangeConstants;
-import com.redhat.fsw.poc.sy_stockquote.camel.util.CamelExchangeUtil;
 import com.redhat.fsw.poc.sy_stockquote.generated.xsd.stocktrade.StockTrade;
 import com.redhat.fsw.poc.sy_stockquote.trade.TradeConstants;
 
@@ -45,7 +44,7 @@ public class TradeManifestBuilder {
         this.logger.info("Trade Manifest Builder Started");
 
         // Get the Header for the Manifest with its XML Content
-        Object manifestHeader = CamelExchangeUtil.getHeader(exchange, TradeConstants.TRADE_MANIFEST_HEADER_NAME);
+        Object manifestHeader = exchange.getIn().getHeader(TradeConstants.TRADE_MANIFEST_HEADER_NAME);
         if (manifestHeader != null) {
             String manifestString = (String) manifestHeader;
 
@@ -68,16 +67,16 @@ public class TradeManifestBuilder {
                             + " - " + stockTrade.getSymbol() + " - " + stockTrade.getType());
                 }
 
-                // Set Manifest on Exchange
-                CamelExchangeUtil.setInHeader(exchange, CamelExchangeConstants.MANIFEST_OBJECT, stockTrade);
+                // Set exchange.getIn() on Exchange
+                exchange.getIn().setHeader(CamelExchangeConstants.MANIFEST_OBJECT, stockTrade);
 
             } catch (JAXBException jaxbe) {
                 this.logger.error("Could Not Unmarshall StockTrade, " + jaxbe.getMessage(), jaxbe);
-                CamelExchangeUtil.setInHeader(exchange, CamelExchangeConstants.IS_MANIFEST_VALID, false);
+                exchange.getIn().setHeader(CamelExchangeConstants.IS_MANIFEST_VALID, false);
             }
 
         } else {
-            CamelExchangeUtil.setInHeader(exchange, CamelExchangeConstants.IS_MANIFEST_VALID, false);
+            exchange.getIn().setHeader(CamelExchangeConstants.IS_MANIFEST_VALID, false);
         }
 
         this.logger.info("Trade Manifest Builder Completed");

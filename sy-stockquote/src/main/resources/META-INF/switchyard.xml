@@ -24,6 +24,9 @@
       <sca:reference name="FileRejectionSender">
         <sca:interface.java interface="com.redhat.fsw.poc.sy_stockquote.common.service.QueueSender"/>
       </sca:reference>
+      <sca:reference name="StockQuoteCaller">
+        <sca:interface.wsdl interface="StockData.wsdl#wsdl.porttype(StockQuoteSoap)"/>
+      </sca:reference>
     </sca:component>
     <sca:reference name="ESBNotifyReference" multiplicity="0..1" promote="StockTraderRoutes/ESBNotifySender">
       <sca:interface.java interface="com.redhat.fsw.poc.sy_stockquote.common.service.QueueSender"/>
@@ -65,5 +68,12 @@
         <jms:connectionFactory>#ConnectionFactory</jms:connectionFactory>
       </jms:binding.jms>
     </sca:service>
+    <sca:reference name="StockQuoteSoap" multiplicity="0..1" promote="StockTraderRoutes/StockQuoteCaller">
+      <sca:interface.wsdl interface="StockData.wsdl#wsdl.porttype(StockQuoteSoap)"/>
+      <soap:binding.soap name="soap1">
+        <soap:wsdl>StockData.wsdl</soap:wsdl>
+        <soap:endpointAddress>http://www.webservicex.net/stockquote.asmx</soap:endpointAddress>
+      </soap:binding.soap>
+    </sca:reference>
   </sca:composite>
 </sy:switchyard>
