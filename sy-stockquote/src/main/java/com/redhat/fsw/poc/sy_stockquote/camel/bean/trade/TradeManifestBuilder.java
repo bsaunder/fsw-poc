@@ -11,10 +11,10 @@ import javax.xml.bind.Unmarshaller;
 import javax.xml.transform.stream.StreamSource;
 
 import org.apache.camel.Exchange;
+import org.apache.camel.Handler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.redhat.fsw.poc.sy_stockquote.camel.bean.common.ManifestBuilder;
 import com.redhat.fsw.poc.sy_stockquote.camel.util.CamelExchangeConstants;
 import com.redhat.fsw.poc.sy_stockquote.camel.util.CamelExchangeUtil;
 import com.redhat.fsw.poc.sy_stockquote.generated.xsd.stocktrade.StockTrade;
@@ -26,19 +26,21 @@ import com.redhat.fsw.poc.sy_stockquote.trade.TradeConstants;
  * @author Bryan Saunders <btsaunde@gmail.com>
  * 
  */
-public class TradeManifestBuilder implements ManifestBuilder {
+public class TradeManifestBuilder {
 
     /**
      * Logger
      */
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    /*
-     * (non-Javadoc)
+    /**
+     * Builds a Manifest based on the Headers provided by the incoming Exchange and Places it on the Exchange Message as
+     * a Header.
      * 
-     * @see com.redhat.fsw.poc.sy_stockquote.camel.bean.common.ManifestBuilder#buildManifest(org.apache.camel.Exchange)
+     * @param exchange
+     *            Incoming Camel Exchange
      */
-    @Override
+    @Handler
     public void buildManifest(Exchange exchange) {
         this.logger.info("Trade Manifest Builder Started");
 
@@ -46,7 +48,7 @@ public class TradeManifestBuilder implements ManifestBuilder {
         Object manifestHeader = CamelExchangeUtil.getHeader(exchange, TradeConstants.TRADE_MANIFEST_HEADER_NAME);
         if (manifestHeader != null) {
             String manifestString = (String) manifestHeader;
-            
+
             if (this.logger.isDebugEnabled()) {
                 this.logger.debug("Preparing to Unmarshall Manifest: " + manifestString);
             }
@@ -67,15 +69,15 @@ public class TradeManifestBuilder implements ManifestBuilder {
                 }
 
                 // Set Manifest on Exchange
-                exchange.getIn().setHeader(CamelExchangeConstants.MANIFEST_OBJECT, stockTrade);
+                CamelExchangeUtil.setInHeader(exchange, CamelExchangeConstants.MANIFEST_OBJECT, stockTrade);
 
             } catch (JAXBException jaxbe) {
                 this.logger.error("Could Not Unmarshall StockTrade, " + jaxbe.getMessage(), jaxbe);
-                exchange.getIn().setHeader(CamelExchangeConstants.IS_MANIFEST_VALID, false);
+                CamelExchangeUtil.setInHeader(exchange, CamelExchangeConstants.IS_MANIFEST_VALID, false);
             }
 
         } else {
-            exchange.getIn().setHeader(CamelExchangeConstants.IS_MANIFEST_VALID, false);
+            CamelExchangeUtil.setInHeader(exchange, CamelExchangeConstants.IS_MANIFEST_VALID, false);
         }
 
         this.logger.info("Trade Manifest Builder Completed");

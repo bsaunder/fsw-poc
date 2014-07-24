@@ -1,9 +1,18 @@
 package com.redhat.fsw.poc.sy_stockquote.camel.route.trade;
 
-import org.apache.camel.builder.RouteBuilder;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
 
+import org.apache.camel.Predicate;
+import org.apache.camel.builder.PredicateBuilder;
+import org.apache.camel.builder.RouteBuilder;
+import org.apache.camel.converter.jaxb.JaxbDataFormat;
+
+import com.redhat.fsw.poc.sy_stockquote.camel.bean.common.StockTradeResponseBuilder;
 import com.redhat.fsw.poc.sy_stockquote.camel.bean.trade.TradeManifestBuilder;
+import com.redhat.fsw.poc.sy_stockquote.camel.bean.trade.TradeManifestValidator;
 import com.redhat.fsw.poc.sy_stockquote.camel.util.CamelExchangeConstants;
+import com.redhat.fsw.poc.sy_stockquote.generated.wsdl.stocktrader.StockTradeOutput;
 
 /**
  * Main Camel Route Builder for configuring all of the Stock Trader related Routes.
@@ -16,46 +25,56 @@ public class StockTraderRoutes extends RouteBuilder {
     /**
      * Inbound Trade Route ID.
      */
-    public static final String inboundTradeRouteId ="InboundTradeRoute";
+    public static final String inboundTradeRouteId = "InboundTradeRoute";
 
     /**
      * The Camel route(s) are configured via this method.  The from endpoint is required to be a SwitchYard service.
+     * @throws JAXBException 
      */
-    public void configure() {
+    public void configure() throws JAXBException {
+        
+        // JAXB Data Formatter
+        JaxbDataFormat jxb = new JaxbDataFormat(JAXBContext.newInstance(StockTradeOutput.class.getPackage().getName()));
+        jxb.setFragment(true);
+        
+        // Predicate Magic
+        // Ref: http://www.davsclaus.com/2009/02/apache-camel-and-using-compound.html
+        Predicate manifestValidPredicate = header(CamelExchangeConstants.IS_MANIFEST_VALID).isEqualTo(true);
+        Predicate stateExchangeValidPredicate = header(CamelExchangeConstants.IS_STATE_EXCHANGE_VALID).isEqualTo(true);
+        Predicate manifestAndStateExchangeValidPredicate = PredicateBuilder.and(manifestValidPredicate, stateExchangeValidPredicate);
         
         // Inbound Stock Trading Route
         from("switchyard://StockServicePortType")
         .routeId(inboundTradeRouteId)
         .log("Received message for 'StockServicePortType'")
         .log(inboundTradeRouteId + ": Route Started")
-        .bean(TradeManifestBuilder.class, "buildManifest")
+        .bean(TradeManifestBuilder.class)
         .choice()
             .when(header(CamelExchangeConstants.MANIFEST_OBJECT).isNotNull())
                 .log(inboundTradeRouteId + ": Manifest Created")
-                // Replace with Bean call to Validator
-                .setHeader(CamelExchangeConstants.IS_MANIFEST_VALID).constant(true)
+                //.setHeader(CamelExchangeConstants.IS_MANIFEST_VALID).constant(true)
+                .bean(TradeManifestValidator.class)
                 .choice()
-                    .when(header(CamelExchangeConstants.IS_MANIFEST_VALID).isEqualTo(true))
-                        .log(inboundTradeRouteId + ": Manifest Valid")
-                        // Replace with SOAP call to State Exchange
+                    .when(manifestValidPredicate)
+                        .log(inboundTradeRouteId + ": Manifest Valid, Calling Exchange")
+                        // TODO Replace with SOAP call to State Exchange
                         .setHeader(CamelExchangeConstants.IS_STATE_EXCHANGE_VALID).constant(true)
-                        .choice()
-                            .when(header(CamelExchangeConstants.IS_STATE_EXCHANGE_VALID).isEqualTo(true))
-                                .log(inboundTradeRouteId + ": State Exchange Valid")
-                                //bean(EPDAttachmentHandler, inflateAttachment)
-                                //to(file://NFS_Share)
-                                //to(switchyard://JMS_FileRejection)
-                            .otherwise()
-                                .log(inboundTradeRouteId + ": State Exchange Not Valid")
-                            .endChoice()
-                    .otherwise()
-                        .log(inboundTradeRouteId + ": Manifest Not Valid")
-                    .endChoice()
-            .otherwise()
-                .log(inboundTradeRouteId + ": Manifest Creation Failed")
+                    .endChoice() // Terminate inner choice()
             .end() // Terminate choice()
-        //to(switchyard://JMS_ESBNotify)
-        // Set the Result to CMS
+        .choice()
+            .when(manifestAndStateExchangeValidPredicate)
+                .log(inboundTradeRouteId + ": State Exchange & Manifest Valid")
+                // TODO bean(EPDAttachmentHandler, inflateAttachment)
+                // TODO to(file://NFS_Share)
+                // TODO to(switchyard://JMS_FileRejection)
+            .otherwise()
+                .log(inboundTradeRouteId + ": State Exchange Or Manifest Not Valid")
+                // TODO to(switchyard://JMS_ESBNotify)
+            .end() // Terminate choice()
+        .log(inboundTradeRouteId + ": Building Response")
+        .bean(StockTradeResponseBuilder.class)
+        .marshal(jxb)
+        .convertBodyTo(String.class)
         .log(inboundTradeRouteId + ": Route Completed");
         
     }

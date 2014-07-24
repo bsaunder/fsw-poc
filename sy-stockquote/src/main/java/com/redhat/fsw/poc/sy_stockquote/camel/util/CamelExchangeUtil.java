@@ -34,7 +34,7 @@ public abstract class CamelExchangeUtil {
     public static Object getHeader(Exchange exchange, String headerName) {
         Object result = null;
 
-        Map<String, Object> inHeaders = exchange.getIn().getHeaders();       
+        Map<String, Object> inHeaders = exchange.getIn().getHeaders();
         if (inHeaders.containsKey(headerName)) {
             result = inHeaders.get(headerName);
         }
@@ -47,5 +47,45 @@ public abstract class CamelExchangeUtil {
         }
 
         return result;
+    }
+
+    /**
+     * Sets the In Header to the Specified Value on the Given Exchange
+     * 
+     * @param exchange
+     *            Exchange to Set Header On
+     * @param headerName
+     *            Header Name
+     * @param value
+     *            Header Value
+     */
+    public static void setInHeader(Exchange exchange, String headerName, Object value) {
+        exchange.getIn().setHeader(headerName, value);
+    }
+
+    /**
+     * Sets the Out Header to the Specified Value on the Given Exchange
+     * 
+     * @param exchange
+     *            Exchange to Set Header On
+     * @param headerName
+     *            Header Name
+     * @param value
+     *            Header Value
+     */
+    public static void setOutHeader(Exchange exchange, String headerName, Object value) {
+        exchange.getOut().setHeader(headerName, value);
+    }
+
+    /**
+     * Sets the In Body to the Specified Value.
+     * 
+     * @param exchange
+     *            Exchange to Set Body On
+     * @param value
+     *            Body Value
+     */
+    public static void setBody(Exchange exchange, Object value) {
+        exchange.getIn().setBody(value);
     }
 }
