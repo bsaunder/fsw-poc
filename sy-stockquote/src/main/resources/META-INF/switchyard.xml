@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<sy:switchyard xmlns:camel="urn:switchyard-component-camel:config:1.0" xmlns:sca="http://docs.oasis-open.org/ns/opencsa/sca/200912" xmlns:soap="urn:switchyard-component-soap:config:1.0" xmlns:sy="urn:switchyard-config:switchyard:1.0" name="sy-stockquote" targetNamespace="urn:com.redhat.fsw.poc:sy-stockquote:0.0.1">
+<sy:switchyard xmlns:bean="urn:switchyard-component-bean:config:1.0" xmlns:camel="urn:switchyard-component-camel:config:1.0" xmlns:jms="urn:switchyard-component-camel-jms:config:1.0" xmlns:sca="http://docs.oasis-open.org/ns/opencsa/sca/200912" xmlns:soap="urn:switchyard-component-soap:config:1.0" xmlns:sy="urn:switchyard-config:switchyard:1.0" name="sy-stockquote" targetNamespace="urn:com.redhat.fsw.poc:sy-stockquote:0.0.1">
   <sca:composite name="sy-stockquote" targetNamespace="urn:com.redhat.fsw.poc:sy-stockquote:0.0.1">
     <sca:service name="StockTraderService" promote="StockTraderRoutes/StockServicePortType">
       <sca:interface.wsdl interface="StockTrader.wsdl#wsdl.porttype(StockServicePortType)"/>
@@ -18,6 +18,52 @@
       <sca:service name="StockServicePortType">
         <sca:interface.wsdl interface="StockTrader.wsdl#wsdl.porttype(StockServicePortType)"/>
       </sca:service>
+      <sca:reference name="ESBNotifySender">
+        <sca:interface.java interface="com.redhat.fsw.poc.sy_stockquote.common.service.QueueSender"/>
+      </sca:reference>
+      <sca:reference name="FileRejectionSender">
+        <sca:interface.java interface="com.redhat.fsw.poc.sy_stockquote.common.service.QueueSender"/>
+      </sca:reference>
     </sca:component>
+    <sca:reference name="ESBNotifyReference" multiplicity="0..1" promote="StockTraderRoutes/ESBNotifySender">
+      <sca:interface.java interface="com.redhat.fsw.poc.sy_stockquote.common.service.QueueSender"/>
+      <jms:binding.jms name="ESBNotifyBinding">
+        <jms:queue>ESBNotifyQueue</jms:queue>
+        <jms:connectionFactory>#ConnectionFactory</jms:connectionFactory>
+      </jms:binding.jms>
+    </sca:reference>
+    <sca:reference name="FileRejectionReference" multiplicity="0..1" promote="StockTraderRoutes/FileRejectionSender">
+      <sca:interface.java interface="com.redhat.fsw.poc.sy_stockquote.common.service.QueueSender"/>
+      <jms:binding.jms name="FileRejectionBinding">
+        <jms:queue>FileRejectionQueue</jms:queue>
+        <jms:connectionFactory>#ConnectionFactory</jms:connectionFactory>
+      </jms:binding.jms>
+    </sca:reference>
+    <sca:component name="FileRejectionReceiverBean">
+      <bean:implementation.bean class="com.redhat.fsw.poc.sy_stockquote.common.service.FileRejectionReceiverBean"/>
+      <sca:service name="FileRejectionQueueReceiver">
+        <sca:interface.java interface="com.redhat.fsw.poc.sy_stockquote.camel.bean.common.FileRejectionQueueReceiver"/>
+      </sca:service>
+    </sca:component>
+    <sca:service name="FileRejectionQueueService" promote="FileRejectionReceiverBean/FileRejectionQueueReceiver">
+      <sca:interface.java interface="com.redhat.fsw.poc.sy_stockquote.camel.bean.common.FileRejectionQueueReceiver"/>
+      <jms:binding.jms name="jms1">
+        <jms:queue>FileRejectionQueue</jms:queue>
+        <jms:connectionFactory>#ConnectionFactory</jms:connectionFactory>
+      </jms:binding.jms>
+    </sca:service>
+    <sca:component name="ESBNotifyQueueReceiverBean">
+      <bean:implementation.bean class="com.redhat.fsw.poc.sy_stockquote.common.service.ESBNotifyQueueReceiverBean"/>
+      <sca:service name="ESBNotifyQueueReceiver">
+        <sca:interface.java interface="com.redhat.fsw.poc.sy_stockquote.camel.bean.common.ESBNotifyQueueReceiver"/>
+      </sca:service>
+    </sca:component>
+    <sca:service name="ESBNotifyQueueService" promote="ESBNotifyQueueReceiverBean/ESBNotifyQueueReceiver">
+      <sca:interface.java interface="com.redhat.fsw.poc.sy_stockquote.camel.bean.common.ESBNotifyQueueReceiver"/>
+      <jms:binding.jms name="jms1">
+        <jms:queue>ESBNotifyQueue</jms:queue>
+        <jms:connectionFactory>#ConnectionFactory</jms:connectionFactory>
+      </jms:binding.jms>
+    </sca:service>
   </sca:composite>
 </sy:switchyard>

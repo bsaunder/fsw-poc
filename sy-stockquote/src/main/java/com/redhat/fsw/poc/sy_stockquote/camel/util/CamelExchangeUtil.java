@@ -87,5 +87,6 @@ public abstract class CamelExchangeUtil {
      */
     public static void setBody(Exchange exchange, Object value) {
         exchange.getIn().setBody(value);
+        exchange.getOut().setBody(value);
     }
 }
