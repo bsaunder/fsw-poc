@@ -1,0 +1,7 @@
+if (outcome != success) of /subsystem=messaging/hornetq-server=default/jms-queue=ESBNotifyQueue:read-resource
+    jms-queue add --queue-address=ESBNotifyQueue --entries=ESBNotifyQueue
+end-if
+
+if (outcome != success) of /subsystem=messaging/hornetq-server=default/jms-queue=FileRejectionQueue:read-resource
+    jms-queue add --queue-address=FileRejectionQueue --entries=FileRejectionQueue
+end-if

@@ -1,0 +1,8 @@
+if (outcome == success) of /subsystem=messaging/hornetq-server=default/jms-queue=ESBNotifyQueue:read-resource
+    jms-queue remove --queue-address=ESBNotifyQueue
+end-if
+
+if (outcome == success) of /subsystem=messaging/hornetq-server=default/jms-queue=FileRejectionQueue:read-resource
+    jms-queue remove --queue-address=FileRejectionQueue
+end-if
+

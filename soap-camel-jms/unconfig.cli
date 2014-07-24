@@ -1,3 +1,0 @@
-if (outcome == success) of /subsystem=messaging/hornetq-server=default/jms-queue=GreetingServiceQueue:read-resource
-    jms-queue remove --queue-address=GreetingServiceQueue
-end-if
