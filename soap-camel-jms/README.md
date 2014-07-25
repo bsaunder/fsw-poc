@@ -23,7 +23,14 @@ Run the test client
 
 You should see the following output
 
-    TBD
+	<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+	   <SOAP-ENV:Header xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"/>
+	   <soap:Body>
+	      <GetQuoteResponse xmlns="urn:com.redhat.fsw.poc:soap-camel-jms:1.0">
+	         <GetQuoteResult>55.00</GetQuoteResult>
+	      </GetQuoteResponse>
+	   </soap:Body>
+	</soap:Envelope>
 
 Undeploy the poc
 

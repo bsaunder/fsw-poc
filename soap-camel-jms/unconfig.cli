@@ -1,0 +1,5 @@
+if (outcome == success) of /subsystem=messaging/hornetq-server=default/jms-queue=GetPriceQueue:read-resource
+    jms-queue remove --queue-address=GetPriceQueue
+end-if
+
+
