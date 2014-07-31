@@ -10,6 +10,12 @@
         <soap:socketAddr>:${jettyPort}</soap:socketAddr>
         <soap:contextPath>sy-stockquote</soap:contextPath>
         <soap:mtom xopExpand="true"/>
+        <soap:inInterceptors>
+          <soap:interceptor class="com.redhat.fsw.poc.sy_stockquote.common.util.logging.CxfLoggingInInterceptor"/>
+        </soap:inInterceptors>
+        <soap:outInterceptors>
+          <soap:interceptor class="com.redhat.fsw.poc.sy_stockquote.common.util.logging.CxfLoggingOutInterceptor"/>
+        </soap:outInterceptors>
       </soap:binding.soap>
     </sca:service>
     <sca:component name="StockTraderRoutes">
