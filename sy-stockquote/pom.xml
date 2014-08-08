@@ -87,6 +87,10 @@
 					<packageName>com.redhat.fsw.poc.sy_stockquote.generated.xsd.stocktrade</packageName>
 					<outputDirectory>${basedir}/src/main/generated</outputDirectory>
 					<schemaDirectory>${basedir}/src/main/xsd</schemaDirectory>
+					<bindingDirectory>${basedir}/src/main/xsd</bindingDirectory>
+					<bindingIncludes>
+						<bindingInclude>bindings.xjb</bindingInclude>
+					</bindingIncludes>
 				</configuration>
 			</plugin>
 			<plugin>

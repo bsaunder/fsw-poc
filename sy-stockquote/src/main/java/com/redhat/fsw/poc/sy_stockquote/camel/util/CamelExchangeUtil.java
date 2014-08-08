@@ -23,6 +23,7 @@ public final class CamelExchangeUtil {
         CamelExchangeUtil.keyList.add(CamelExchangeConstants.IS_MANIFEST_VALID);
         CamelExchangeUtil.keyList.add(CamelExchangeConstants.IS_STATE_EXCHANGE_VALID);
         CamelExchangeUtil.keyList.add(CamelExchangeConstants.MANIFEST_OBJECT);
+        CamelExchangeUtil.keyList.add(CamelExchangeConstants.TRANSFER_OBJECT);
     }
 
     /**

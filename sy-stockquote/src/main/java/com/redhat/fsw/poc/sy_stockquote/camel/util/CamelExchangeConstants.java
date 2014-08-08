@@ -27,6 +27,11 @@ public abstract class CamelExchangeConstants {
      * Contains the Incoming Message Body.
      */
     public static final String INCOMING_BODY = "ST_incomingMessageBody";
+    
+    /**
+     * Contains the JMS Transfer Object.
+     */
+    public static final String TRANSFER_OBJECT = "ST_transferObject";
 
     /**
      * Private Constructor. Class Should Not Be Instantiated.

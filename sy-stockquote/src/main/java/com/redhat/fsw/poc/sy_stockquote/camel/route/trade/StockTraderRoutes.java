@@ -10,6 +10,7 @@ import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.converter.jaxb.JaxbDataFormat;
 
 import com.redhat.fsw.poc.sy_stockquote.camel.bean.common.StockTradeResponseBuilder;
+import com.redhat.fsw.poc.sy_stockquote.camel.bean.common.TransferBeanBuilder;
 import com.redhat.fsw.poc.sy_stockquote.camel.bean.trade.ExchangeRequestBuilder;
 import com.redhat.fsw.poc.sy_stockquote.camel.bean.trade.ExchangeResponseProcessor;
 import com.redhat.fsw.poc.sy_stockquote.camel.bean.trade.TradeManifestBuilder;
@@ -64,7 +65,9 @@ public class StockTraderRoutes extends RouteBuilder {
         .log("Received message for 'StockServicePortType'")
         .log(inboundTradeRouteId + ": Route Started")
         .setProperty(CamelExchangeConstants.INCOMING_BODY, simple("${body}"))
+        .bean(TransferBeanBuilder.class)
         .bean(TradeManifestBuilder.class)
+        .bean(TransferBeanBuilder.class, "setManifest")
         .choice()
             .when(header(CamelExchangeConstants.MANIFEST_OBJECT).isNotNull())
                 .log(inboundTradeRouteId + ": Manifest Created")
@@ -92,9 +95,11 @@ public class StockTraderRoutes extends RouteBuilder {
                 .convertBodyTo(String.class)
                 .setHeader("CamelFileName", simple("st_attachment_${id}.xml"))
                 .to("file:/tmp/st_attachments")
+                .setBody(simple("${in.header.ST_transferObject}"))
                 .to("switchyard://FileRejectionSender")
             .otherwise()
                 .log(inboundTradeRouteId + ": State Exchange Or Manifest Not Valid")
+                .setBody(simple("${in.header.ST_transferObject}}"))
                 .to("switchyard://ESBNotifySender")
             .end() // Terminate choice()
         .log(inboundTradeRouteId + ": Building Response")
@@ -102,7 +107,7 @@ public class StockTraderRoutes extends RouteBuilder {
         .marshal(stockTradeOutputJaxb)
         .convertBodyTo(String.class)
         .log(inboundTradeRouteId + ": Route Completed");
-        
+
     }
 
 }

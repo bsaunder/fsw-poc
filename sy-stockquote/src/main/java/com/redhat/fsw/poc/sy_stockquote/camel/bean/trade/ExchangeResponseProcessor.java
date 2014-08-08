@@ -39,6 +39,7 @@ public class ExchangeResponseProcessor {
         if(response != null){
             String quoteResult = response.getGetQuoteResult();
             
+            // TODO Add Comment on BRMG Appearance
             // If Contains Last Price of 0.0 then It is Invalid
             if(quoteResult.contains("<Last>0.00</Last>")){
                 headers.put(CamelExchangeConstants.IS_STATE_EXCHANGE_VALID, false);

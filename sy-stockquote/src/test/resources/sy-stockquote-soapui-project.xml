@@ -56,4 +56,18 @@
          <urn:tradeDetails>cid:StockQuotes.xml</urn:tradeDetails>
       </urn:StockTradeInput>
    </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:attachment><con:name>StockQuotes.xml</con:name><con:contentType>text/xml</con:contentType><con:size>525</con:size><con:contentId>StockQuotes.xml</con:contentId><con:data>UEsDBBQACAgIANeD+EQAAAAAAAAAAAAAAAAPAAAAU3RvY2tRdW90ZXMueG1sXZFfT4MwFMWfNfE7EBKfzFpgBTrTddG5ZA/+nYvvlV0ZGbQEytRvb7mgRt/O75yb3nt7xeKjKr0jNG1h9NwPSeB7oDOzK3Q+9zv7NuH+Qp6dimdrssNTZyy0Dk8G7pWTn9WrKeVmvRV01OjfqtbKOCHTJBYUAe0bZUGmNGI0CkImKDIm26ICOb2Mo7oSFAHt5V7pHORFQBh3L42I0UMNWsYx6X3U6K6LfN83Zs5FPYxj3vvSNHLDOIneiyk71yaM2JQzF4yM2d3BLlUtw4AkMb8WdGTMHhs4FqZrl6VpAQfggv41hzpoMtBW5fC7BE/PXe3/AMuvtN4gsZDwmTfxkhCX+PGxaqUa3cqAzNzAgx56TVYyCUjqvrSX6N0rt80Gdt5aWUGR+uPR7+uNarzrF1BLBwilzydcMAEAAA0CAABQSwECFAAUAAgICADXg/hEpc8nXDABAAANAgAADwAAAAAAAAAAAAAAAAAAAAAAU3RvY2tRdW90ZXMueG1sUEsFBgAAAAABAAEAPQAAAG0BAAAAAA==</con:data><con:id>86b70ae8-1224-4d1f-9149-24e41343492a</con:id></con:attachment><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:com.redhat.fsw.poc:sy-stockquote:1.0/StockServicePortType/ProcessStockTradeRequest"/><con:wsrmConfig version="1.2"/></con:call><con:call name="Invalid"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/sy-stockquote/StockService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:com.redhat.fsw.poc:sy-stockquote:1.0">
+   <soapenv:Header>
+      <urn1:stockTrade xmlns:urn1="urn:com.redhat.fsw.poc:sy-stockquote:1.0">
+         <urn1:type>B</urn1:type>
+         <urn1:amount>58.6</urn1:amount>
+         <urn1:symbol>ASD</urn1:symbol>
+         <urn1:accountId>BTS00001</urn1:accountId>
+      </urn1:stockTrade>
+   </soapenv:Header>
+   <soapenv:Body>
+      <urn:StockTradeInput>
+         <urn:tradeDetails>cid:StockQuotes.xml</urn:tradeDetails>
+      </urn:StockTradeInput>
+   </soapenv:Body>
 </soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:attachment><con:name>StockQuotes.xml</con:name><con:contentType>text/xml</con:contentType><con:size>525</con:size><con:contentId>StockQuotes.xml</con:contentId><con:data>UEsDBBQACAgIANeD+EQAAAAAAAAAAAAAAAAPAAAAU3RvY2tRdW90ZXMueG1sXZFfT4MwFMWfNfE7EBKfzFpgBTrTddG5ZA/+nYvvlV0ZGbQEytRvb7mgRt/O75yb3nt7xeKjKr0jNG1h9NwPSeB7oDOzK3Q+9zv7NuH+Qp6dimdrssNTZyy0Dk8G7pWTn9WrKeVmvRV01OjfqtbKOCHTJBYUAe0bZUGmNGI0CkImKDIm26ICOb2Mo7oSFAHt5V7pHORFQBh3L42I0UMNWsYx6X3U6K6LfN83Zs5FPYxj3vvSNHLDOIneiyk71yaM2JQzF4yM2d3BLlUtw4AkMb8WdGTMHhs4FqZrl6VpAQfggv41hzpoMtBW5fC7BE/PXe3/AMuvtN4gsZDwmTfxkhCX+PGxaqUa3cqAzNzAgx56TVYyCUjqvrSX6N0rt80Gdt5aWUGR+uPR7+uNarzrF1BLBwilzydcMAEAAA0CAABQSwECFAAUAAgICADXg/hEpc8nXDABAAANAgAADwAAAAAAAAAAAAAAAAAAAAAAU3RvY2tRdW90ZXMueG1sUEsFBgAAAAABAAEAPQAAAG0BAAAAAA==</con:data><con:id>86b70ae8-1224-4d1f-9149-24e41343492a</con:id></con:attachment><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:com.redhat.fsw.poc:sy-stockquote:1.0/StockServicePortType/ProcessStockTradeRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/></con:soapui-project>

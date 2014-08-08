@@ -3,6 +3,8 @@
  */
 package com.redhat.fsw.poc.sy_stockquote.common.service;
 
+import com.redhat.fsw.poc.sy_stockquote.common.bean.TransferBean;
+
 /**
  * Common Interface for Sending Messages to Queues.
  * 
@@ -14,5 +16,5 @@ public interface QueueSender {
     /**
      * Sends the Message to the Queue.
      */
-    public void send();
+    public void send(TransferBean transferBean);
 }
